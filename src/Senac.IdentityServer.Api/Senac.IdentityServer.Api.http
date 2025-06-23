@@ -1,0 +1,6 @@
+@Senac.IdentityServer.Api_HostAddress = http://localhost:5080
+
+GET {{Senac.IdentityServer.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
