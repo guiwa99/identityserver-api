@@ -6,7 +6,10 @@ namespace Senac.IdentityServer.Api
     {
       var builder = WebApplication.CreateBuilder(args);
 
-      builder.Services.AddIdentityServer()
+      builder.Services.AddIdentityServer(options =>
+      {
+        options.IssuerUri = "https://identityserver-api.onrender.com";
+      })
         .AddInMemoryApiScopes(Config.ApiScopes)
         .AddInMemoryClients(Config.Clients);
 
