@@ -13,6 +13,16 @@ namespace Senac.IdentityServer.Api
         .AddInMemoryApiScopes(Config.ApiScopes)
         .AddInMemoryClients(Config.Clients);
 
+      builder.Services.AddCors(options =>
+      {
+        options.AddPolicy("default", policy =>
+        {
+          policy.AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+      });
+
       builder.Services.AddControllers();
       builder.Services.AddEndpointsApiExplorer();
       builder.Services.AddSwaggerGen();
