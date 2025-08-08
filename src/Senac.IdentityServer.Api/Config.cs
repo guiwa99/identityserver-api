@@ -26,27 +26,5 @@ namespace Senac.IdentityServer.Api
                 AllowedScopes = { "loca-games-api" }
             }
         ];
-
-    public static SigningCredentials GetPersistedKey()
-    {
-      var keyFile = "signingkey.json";
-
-      if (File.Exists(keyFile))
-      {
-        var parameters = JsonConvert.DeserializeObject<RSAParameters>(File.ReadAllText(keyFile));
-        var rsa = RSA.Create();
-        rsa.ImportParameters(parameters);
-        return new SigningCredentials(new RsaSecurityKey(rsa), SecurityAlgorithms.RsaSha256);
-      }
-      else
-      {
-        var rsa = RSA.Create(2048);
-        var parameters = rsa.ExportParameters(true);
-        File.WriteAllText(keyFile, JsonConvert.SerializeObject(parameters));
-        return new SigningCredentials(new RsaSecurityKey(rsa), SecurityAlgorithms.RsaSha256);
-      }
-    }
   }
-
-  
-  }
+}

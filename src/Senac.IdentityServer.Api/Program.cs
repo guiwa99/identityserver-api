@@ -1,3 +1,5 @@
+using System.Security.Cryptography.X509Certificates;
+
 namespace Senac.IdentityServer.Api
 {
   public class Program
@@ -8,10 +10,12 @@ namespace Senac.IdentityServer.Api
 
       var configuration = builder.Configuration;
 
+      var cert = new X509Certificate2("meucertificado.pfx", "senha-dificil");
+
       builder.Services.AddIdentityServer(options =>
       {
         options.IssuerUri = configuration["IdentityServer:BaseUrl"];
-      }).AddSigningCredential(Config.GetPersistedKey())
+      }).AddSigningCredential(cert)
         .AddInMemoryApiScopes(Config.ApiScopes)
         .AddInMemoryClients(Config.Clients);
 
