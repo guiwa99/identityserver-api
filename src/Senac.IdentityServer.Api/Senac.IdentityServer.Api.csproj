@@ -19,4 +19,10 @@
     <Folder Include="keys\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="certs/meucertificado.pfx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
