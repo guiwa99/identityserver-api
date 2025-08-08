@@ -6,8 +6,12 @@ namespace Senac.IdentityServer.Api
     {
       var builder = WebApplication.CreateBuilder(args);
 
-      builder.Services.AddIdentityServer()
-        .AddInMemoryApiScopes(Config.ApiScopes)
+      var configuration = builder.Configuration;
+
+      builder.Services.AddIdentityServer(options =>
+      {
+        options.IssuerUri = configuration["IdentityServer:BaseUrl"];
+      }).AddInMemoryApiScopes(Config.ApiScopes)
         .AddInMemoryClients(Config.Clients);
 
       builder.Services.AddControllers();
