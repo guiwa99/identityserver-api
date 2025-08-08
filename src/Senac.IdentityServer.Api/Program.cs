@@ -11,7 +11,8 @@ namespace Senac.IdentityServer.Api
       builder.Services.AddIdentityServer(options =>
       {
         options.IssuerUri = configuration["IdentityServer:BaseUrl"];
-      }).AddInMemoryApiScopes(Config.ApiScopes)
+      }).AddSigningCredential(Config.GetPersistedKey())
+        .AddInMemoryApiScopes(Config.ApiScopes)
         .AddInMemoryClients(Config.Clients);
 
       builder.Services.AddControllers();
