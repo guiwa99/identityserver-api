@@ -10,7 +10,7 @@ namespace Senac.IdentityServer.Api
 
       var configuration = builder.Configuration;
 
-      var cert = new X509Certificate2("meucertificado.pfx", "senha-dificil");
+      var cert = new X509Certificate2("meucertificado.pfx", "senhadificil");
 
       builder.Services.AddIdentityServer(options =>
       {

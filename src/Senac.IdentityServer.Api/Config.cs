@@ -1,7 +1,4 @@
-using System.Security.Cryptography;
 using Duende.IdentityServer.Models;
-using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json;
 
 namespace Senac.IdentityServer.Api
 {
