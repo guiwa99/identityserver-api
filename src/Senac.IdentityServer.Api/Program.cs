@@ -1,38 +1,25 @@
-using System.Security.Cryptography.X509Certificates;
+var builder = WebApplication.CreateBuilder(args);
 
-namespace Senac.IdentityServer.Api
+// Add services to the container.
+
+builder.Services.AddControllers();
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
 {
-  public class Program
-  {
-    public static void Main(string[] args)
-    {
-      var builder = WebApplication.CreateBuilder(args);
-
-      var configuration = builder.Configuration;
-
-      var cert = new X509Certificate2("./meucertificado.pfx", "senhadificil");
-
-      builder.Services.AddIdentityServer(options =>
-      {
-        options.IssuerUri = configuration["IdentityServer:BaseUrl"];
-      }).AddSigningCredential(cert)
-        .AddInMemoryApiScopes(Config.ApiScopes)
-        .AddInMemoryClients(Config.Clients);
-
-      builder.Services.AddControllers();
-      builder.Services.AddEndpointsApiExplorer();
-      builder.Services.AddSwaggerGen();
-
-      var app = builder.Build();
-
-      if (app.Environment.IsDevelopment())
-      {
-        app.UseDeveloperExceptionPage();
-      }
-
-      app.UseIdentityServer();
-
-      app.Run();
-    }
-  }
+  app.UseSwagger();
+  app.UseSwaggerUI();
 }
+
+app.UseHttpsRedirection();
+
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();
