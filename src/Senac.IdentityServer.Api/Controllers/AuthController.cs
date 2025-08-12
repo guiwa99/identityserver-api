@@ -43,8 +43,8 @@ namespace Senac.IdentityServer.Api.Controllers
       var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
       var token = new JwtSecurityToken(
-          issuer: "https://localhost:7245/",
-          audience: "https://localhost:7245/",
+          issuer: "https://identityserver-api.onrender.com",
+          audience: "https://identityserver-api.onrender.com",
           claims: claims,
           expires: DateTime.Now.AddMinutes(30),
           signingCredentials: creds);
