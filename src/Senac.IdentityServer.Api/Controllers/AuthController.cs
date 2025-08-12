@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using Senac.IdentityServer.Api.Data;
 using Senac.IdentityServer.Api.Request;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -14,12 +15,20 @@ namespace Senac.IdentityServer.Api.Controllers
     [HttpPost("login")]
     public IActionResult Login([FromBody] LoginRequest user)
     {
-      if (user.Username == "admin" && user.Password == "password")
+      string usuario = UsuariosContext.GetUsuariosValidos().FirstOrDefault(x => x.Equals(user.Username));
+      if (usuario == null)
+      {
+        return Unauthorized();
+      }
+
+      if (user.Password == "senac123")
       {
         var token = GenerateJwtToken(user.Username);
         return Ok(new { token });
+      } else
+      {
+        return Unauthorized();
       }
-      return Unauthorized();
     }
 
     private string GenerateJwtToken(string username)
@@ -34,8 +43,8 @@ namespace Senac.IdentityServer.Api.Controllers
       var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
       var token = new JwtSecurityToken(
-          issuer: "https://identityserver-api.onrender.com",
-          audience: "https://identityserver-api.onrender.com",
+          issuer: "https://localhost:7245/",
+          audience: "https://localhost:7245/",
           claims: claims,
           expires: DateTime.Now.AddMinutes(30),
           signingCredentials: creds);
